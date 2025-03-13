@@ -1,10 +1,18 @@
-public class AtendimentoManager {
+
+
+/*
+	AtendimentoManager coordena todo o fluxo de atendimento: cria fila, estatísticas, atendentes e monitor.
+	Os Clientes são gerados periodicamente e uma poison pill sinaliza o término dos atendimentos.
+	Aguardam-se os atendentes (join) e o monitor é interrompido antes de encerrar o sistema.
+	Exibe mensagem final indicando que todos os clientes foram atendidos.
+	
+*/
+
+public class GerenciadorDeAtendimentos {
     public static void main(String[] args) {
     	
-    	
-        // Cria a fila de atendimento utilizando nossa implementação com semáforos.
+        
         FilaSemaforo fila = new FilaSemaforo();
-        // Cria o objeto Estatisticas para registrar dados de atendimento.
         Estatisticas estatisticas = new Estatisticas();
         
         // Inicializa e inicia as threads dos atendentes.
@@ -22,9 +30,11 @@ public class AtendimentoManager {
         // Gera clientes periodicamente e os adiciona na fila.
         for (int i = 1; i <= Config.NUM_CLIENTES; i++) {
             try {
-                Thread.sleep(Config.INTERVALO_CHEGADA);  //pausa a thread que chamou
+            	
+            	 //simula o tempo de chegada dos clientes
+                Thread.sleep(Config.INTERVALO_CHEGADA);
                 Cliente cliente = new Cliente(i);
-                fila.colocar(cliente);
+                fila.colocarNaFila(cliente);
                 System.out.println();  
                 System.out.println(cliente + " entrou na fila.");
                 System.out.println();
@@ -35,7 +45,7 @@ public class AtendimentoManager {
 
         try {
         	 
-        	fila.colocar(new Cliente()); 
+        	fila.colocarNaFila(new Cliente()); 
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -52,7 +62,7 @@ public class AtendimentoManager {
             }
         }
         
-        // Interrompe a thread do monitor, já que os atendimentos foram concluídos.
+        // Interrompe o monitor e espera sua finalização com join() para que todas as atualizações sejam exibidas antes do encerramento.
         monitor.interrupt();
         
         try {

@@ -1,3 +1,10 @@
+
+/*
+	Cliente: Representa um cliente a ser atendido.
+	- id identifica o cliente; id = -1 indica a "poison pill" (sinal de término).
+	- tempoChegada registra o instante de criação do cliente.
+*/
+
 public class Cliente {
     private int id;
     private long tempoChegada;
@@ -27,6 +34,7 @@ public class Cliente {
         return id == -1;
     }
     
+    // Retorna "CondicaoParada" se o cliente for uma poison pill; caso contrário, retorna "Cliente " seguido do id.
     @Override
     public String toString() {
         if (isPoison()) {

@@ -1,6 +1,4 @@
-public class Atendente extends Thread {
-	
-	/*
+/*
 	Atendente: Thread que processa clientes da fila.
 
 	No run():
@@ -8,8 +6,10 @@ public class Atendente extends Thread {
 	- Se o cliente é "poison pill", reinsere-o e encerra.
 	- Calcula o tempo de espera, simula atendimento com sleep e atualiza estatísticas.
 	- Trata interrupções.
-	*/
+*/
 	
+
+public class Atendente extends Thread {
 	
     private int id;
     private FilaSemaforo fila;
@@ -27,7 +27,7 @@ public class Atendente extends Thread {
             while (true) {
             	
                 // Retira o cliente da fila; se a fila estiver vazia, retirar() bloqueia até que um cliente seja inserido.
-                Cliente cliente = fila.retirar();
+                Cliente cliente = fila.retirarDaFila();
                 System.out.println();
                 
                 // Verifica se recebeu a "poison pill" para finalizar o atendimento.
@@ -36,7 +36,7 @@ public class Atendente extends Thread {
                     System.out.println();
                    
                     // Reinsere a poison pill para que outros atendentes também possam terminar e encerra seu próprio laço.
-                    fila.colocar(cliente);
+                    fila.colocarNaFila(cliente);
                     break;
                 }
                 

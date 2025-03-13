@@ -21,7 +21,7 @@ public class Estatisticas {
     private long tempoTotalEspera = 0;
 
     // Atualiza as estatísticas para um cliente atendido de forma sincronizada.
-    public synchronized void clienteAtendido(long tempoEspera) {
+    public synchronized void clienteAtendido(double tempoEspera) {
         totalAtendidos++;
         tempoTotalEspera += tempoEspera;
     }

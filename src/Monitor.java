@@ -1,3 +1,10 @@
+
+/*
+	Monitor: Thread que monitora periodicamente o estado do sistema.
+	- fila: Fila compartilhada para consultar o número de clientes aguardando.
+	- estatisticas: Dados de atendimento que são exibidos junto à quantidade de clientes na fila.
+*/
+
 public class Monitor extends Thread {
     private FilaSemaforo fila;
     private Estatisticas estatisticas;

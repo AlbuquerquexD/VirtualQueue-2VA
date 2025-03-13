@@ -20,8 +20,8 @@ public class FilaSemaforo {
     private final Semaphore mutex = new Semaphore(1);
     private final Semaphore items = new Semaphore(0);
     
-    // o produtor vai inserir os clientes
-    public void colocar(Cliente cliente) throws InterruptedException {
+    // o produtor vai inserir os clientes na fila 
+    public void colocarNaFila(Cliente cliente) throws InterruptedException {
         mutex.acquire();
         try {
             fila.add(cliente); // <- SEÇÃO CRÍTICA (acessando recurso compartilhado)
@@ -32,7 +32,7 @@ public class FilaSemaforo {
     }
     
     //consumidor vai retirar da fila caso exist algum cliente na fila, caso não exista ele fica bloqueado
-    public Cliente retirar() throws InterruptedException {
+    public Cliente retirarDaFila() throws InterruptedException {
         items.acquire();
         mutex.acquire();
         try {
