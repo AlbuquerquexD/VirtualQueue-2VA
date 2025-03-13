@@ -1,5 +1,7 @@
 public class AtendimentoManager {
     public static void main(String[] args) {
+    	
+    	
         // Cria a fila de atendimento utilizando nossa implementação com semáforos.
         FilaSemaforo fila = new FilaSemaforo();
         // Cria o objeto Estatisticas para registrar dados de atendimento.
@@ -20,9 +22,9 @@ public class AtendimentoManager {
         // Gera clientes periodicamente e os adiciona na fila.
         for (int i = 1; i <= Config.NUM_CLIENTES; i++) {
             try {
-                Thread.sleep(Config.INTERVALO_CHEGADA);
+                Thread.sleep(Config.INTERVALO_CHEGADA);  //pausa a thread que chamou
                 Cliente cliente = new Cliente(i);
-                fila.put(cliente);
+                fila.colocar(cliente);
                 System.out.println();  
                 System.out.println(cliente + " entrou na fila.");
                 System.out.println();
@@ -33,7 +35,7 @@ public class AtendimentoManager {
 
         try {
         	 
-        	fila.put(new Cliente()); 
+        	fila.colocar(new Cliente()); 
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -52,11 +54,12 @@ public class AtendimentoManager {
         
         // Interrompe a thread do monitor, já que os atendimentos foram concluídos.
         monitor.interrupt();
-//        try {
-//            monitor.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        
+        try {
+            monitor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         
         System.out.println("Todos os clientes foram atendidos. Sistema encerrado.");
     }

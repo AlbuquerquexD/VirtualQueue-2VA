@@ -11,9 +11,11 @@ public class Monitor extends Thread {
     public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
+            	
+            	// simular o tempo de atendimento
                 Thread.sleep(Config.TEMPO_MONITORAMENTO);
                 
-                // Chama o método size() da FilaSemaforo para obter de forma segura o número de clientes na fila
+                // Chama o método filaEspera() da FilaSemaforo para obter o número de clientes esperando na fila na fila
                 int clientesNaFila = fila.filaEspera();
        
                 System.out.println();
