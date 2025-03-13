@@ -1,20 +1,19 @@
 import java.util.LinkedList;
+
 import java.util.concurrent.Semaphore;
+/*
+	FilaSemaforo: Classe responsável por gerenciar uma fila de clientes com controle de sincronização.
+	
+	- mutex: Semáforo binário (inicializado com 1 permissão) que garante exclusão mútua, 
+	permitindo que apenas uma thread acesse a região crítica (adição ou remoção de clientes) de cada vez.
+	
+	- items: Semáforo de contagem (inicializado com 0) que controla quantos itens estão disponíveis na fila.
+	Isso evita que uma thread tente remover um cliente quando a fila está vazia, pois a thread ficará bloqueada 
+	até que um cliente seja inserido (quando items.release() é chamado).
+
+*/
 
 public class FilaSemaforo {
-	
-	
-    /*
-    FilaSemaforo: Classe responsável por gerenciar uma fila de clientes com controle de sincronização.
-    
-    - mutex: Semáforo binário (inicializado com 1 permissão) que garante exclusão mútua, 
-    permitindo que apenas uma thread acesse a região crítica (adição ou remoção de clientes) de cada vez.
-    
-    - items: Semáforo de contagem (inicializado com 0) que controla quantos itens estão disponíveis na fila.
-    Isso evita que uma thread tente remover um cliente quando a fila está vazia, pois a thread ficará bloqueada 
-    até que um cliente seja inserido (quando items.release() é chamado).
-    
-    */
 	
     private final LinkedList<Cliente> fila = new LinkedList<>();
     private final Semaphore mutex = new Semaphore(1);
